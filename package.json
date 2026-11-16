@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "npx serve out",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "deploy": "next build && npx gh-pages -d out -b gh-pages --dotfiles"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
