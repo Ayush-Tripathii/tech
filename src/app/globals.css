@@ -1,0 +1,501 @@
+/* ==========================================================================
+   GBGTech design system — tokens
+   ========================================================================== */
+:root {
+  /* Colour */
+  --bg-void: #06070a;
+  --bg-raise: #0d0f14;
+  --ink: #f4f5f7;
+  --ink-dim: #8a909b; /* lifted from #6E7480 → 6.2:1 on void, AA for body */
+  --ink-mute: #6e7480;
+  --line: rgba(244, 245, 247, 0.08);
+  --line-strong: rgba(244, 245, 247, 0.18);
+  --spectrum-a: #3b82f6;
+  --spectrum-b: #22d3ee;
+  --spectrum-c: #a78bfa;
+  --signal: #d7ff3e;
+  --invert-bg: #f4f5f7;
+  --spectrum: linear-gradient(90deg, var(--spectrum-a), var(--spectrum-b), var(--spectrum-c));
+
+  /* Section-local palette (interpolated per-frame in the Services inversion) */
+  --sec-bg: var(--bg-void);
+  --sec-ink: var(--ink);
+  --sec-dim: var(--ink-dim);
+  --sec-line: var(--line);
+
+  /* Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+  --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-mech: cubic-bezier(0.7, 0, 0.2, 1);
+
+  /* Timing */
+  --t-instant: 0.15s;
+  --t-fast: 0.3s;
+  --t-base: 0.6s;
+  --t-slow: 0.9s;
+  --t-cine: 1.4s;
+  --t-epic: 2.2s;
+
+  /* Stagger */
+  --st-chars: 0.012s;
+  --st-words: 0.04s;
+  --st-lines: 0.08s;
+  --st-cards: 0.09s;
+  --st-grid: 0.035s;
+
+  /* Type */
+  --font-display: var(--font-grotesk), 'Helvetica Neue', Arial, sans-serif;
+  --font-body: var(--font-grotesk), 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: var(--font-martian), ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --font-editorial: var(--font-newsreader), Georgia, serif;
+
+  --fs-mega: clamp(3.5rem, 11vw, 14rem);
+  --fs-h1: clamp(2.5rem, 6vw, 5.5rem);
+  --fs-h2: clamp(1.75rem, 3.5vw, 3rem);
+  --fs-h3: clamp(1.25rem, 1.8vw, 1.625rem);
+  --fs-body: clamp(1rem, 1.1vw, 1.125rem);
+  --fs-label: 0.6875rem;
+
+  /* Grid & rhythm */
+  --cols: 12;
+  --gutter: clamp(16px, 2vw, 32px);
+  --max-w: 1680px;
+  --side: clamp(16px, 3vw, 48px);
+  --u: 8px;
+  --section-pad: clamp(96px, 14vh, 220px);
+  --header-h: 72px;
+  --radius: 8px;
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--bg-void);
+  color-scheme: dark;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped,
+html.is-locked {
+  overflow: clip;
+}
+body {
+  min-height: 100svh;
+  background: var(--bg-void);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+ul,
+ol {
+  list-style: none;
+}
+::selection {
+  background: var(--signal);
+  color: var(--bg-void);
+}
+
+/* Custom cursor: hide native on fine pointers only */
+@media (pointer: fine) {
+  html.has-cursor,
+  html.has-cursor a,
+  html.has-cursor button,
+  html.has-cursor [role='button'],
+  html.has-cursor label {
+    cursor: none;
+  }
+  html.has-cursor input,
+  html.has-cursor textarea {
+    cursor: text;
+  }
+}
+
+/* Focus ring — the signal colour is reserved for affordances */
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 10000;
+  padding: 12px 18px;
+  background: var(--signal);
+  color: var(--bg-void);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: translateY(-200%);
+  transition: transform var(--t-fast) var(--ease-out-quart);
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+.t-mega,
+.t-h1,
+.t-h2,
+.t-h3 {
+  font-family: var(--font-display);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+  font-kerning: normal;
+}
+.t-mega {
+  font-size: var(--fs-mega);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+}
+.t-h1 {
+  font-size: var(--fs-h1);
+}
+.t-h2 {
+  font-size: var(--fs-h2);
+  line-height: 1;
+}
+.t-h3 {
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.t-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  font-weight: 400;
+}
+.t-dim {
+  color: var(--ink-dim);
+}
+.t-editorial {
+  font-family: var(--font-editorial);
+  font-weight: 200;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+}
+.t-body-lg {
+  font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--side);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+.section {
+  position: relative;
+  padding-block: var(--section-pad);
+}
+.rule {
+  height: 1px;
+  background: var(--line-strong);
+  transform-origin: left center;
+}
+#page {
+  position: relative;
+  transform-origin: 50% 50vh;
+}
+
+/* ==========================================================================
+   Reveal masks (used by LineReveal / SplitReveal)
+   ========================================================================== */
+.mask-line {
+  display: block;
+  overflow: clip;
+  /* Room for descenders + blur bleed without clipping glyphs */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.split-char {
+  display: inline-block;
+}
+html.js [data-reveal]:not(.is-revealed) {
+  visibility: hidden;
+}
+
+/* ==========================================================================
+   §10 hover primitives — CSS halves (one mechanism each, reused everywhere)
+   ========================================================================== */
+
+/* 1. Rolling text */
+.roll {
+  position: relative;
+  display: inline-flex;
+  overflow: clip;
+  vertical-align: top;
+  line-height: 1.2;
+}
+.roll__stack {
+  display: inline-flex;
+  flex-direction: column;
+  transition: transform 0.4s var(--ease-out-quart);
+}
+.roll__stack > span {
+  display: block;
+  white-space: nowrap;
+}
+.roll__stack > span + span {
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+@media (hover: hover) {
+  :is(a, button, .roll-host):hover .roll__stack,
+  :is(a, button, .roll-host):focus-visible .roll__stack {
+    transform: translateY(-100%);
+  }
+}
+
+/* 3. Arrow shift (diagonal) */
+.arrow {
+  position: relative;
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  overflow: clip;
+  vertical-align: -0.08em;
+  flex: none;
+}
+.arrow > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform var(--t-fast) var(--ease-out-quart);
+}
+.arrow > svg + svg {
+  transform: translate(-10px, 10px);
+}
+@media (hover: hover) {
+  :is(a, button, .arrow-host):hover .arrow > svg:first-child {
+    transform: translate(110%, -110%);
+  }
+  :is(a, button, .arrow-host):hover .arrow > svg + svg {
+    transform: translate(0, 0);
+  }
+}
+
+/* 4. Underline draw — enters from left, leaves to the right */
+.uline {
+  position: relative;
+  display: inline-block;
+}
+.uline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform var(--t-base) var(--ease-out-quart);
+}
+@media (hover: hover) {
+  :is(a, button):hover > .uline::after,
+  .uline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+    transition-duration: var(--t-fast);
+  }
+}
+
+/* 13. Dim-the-rest */
+@media (hover: hover) {
+  .dim-rest:has(> .dim-item:hover) > .dim-item:not(:hover) {
+    opacity: 0.35;
+  }
+}
+/* 6. Card lift — siblings dim to 0.5 */
+@media (hover: hover) {
+  .dim-rest.dim-rest--cards:has(> .dim-item:hover) > .dim-item:not(:hover) {
+    opacity: 0.5;
+  }
+}
+.dim-item {
+  transition: opacity var(--t-base) var(--ease-out-quart);
+}
+@media (hover: hover) {
+  .dim-item:hover {
+    transition-duration: var(--t-fast);
+  }
+}
+
+/* 12. Spectrum sweep */
+.sweep {
+  position: relative;
+}
+.sweep::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--spectrum);
+  transform: scaleX(0);
+  transform-origin: left;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.sweep.is-swept::before {
+  animation: sweep var(--t-cine) var(--ease-in-out-quint) forwards;
+}
+@keyframes sweep {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+    opacity: 1;
+  }
+  55% {
+    transform: scaleX(1);
+    transform-origin: left;
+    opacity: 1;
+  }
+  56% {
+    transform-origin: right;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right;
+    opacity: 0.4;
+  }
+}
+
+/* Buttons */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  height: 56px;
+  padding: 0 26px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  isolation: isolate;
+}
+.btn--signal {
+  background: var(--signal);
+  color: var(--bg-void);
+}
+.btn--ghost {
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  transition: border-color var(--t-base) var(--ease-out-quart);
+}
+@media (hover: hover) {
+  .btn--ghost:hover {
+    border-color: var(--signal);
+    transition-duration: var(--t-fast);
+  }
+}
+
+/* ==========================================================================
+   Reduced motion: keep it beautiful, complete and still
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.2s !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+  .roll__stack,
+  .arrow > svg {
+    transition: none !important;
+  }
+}

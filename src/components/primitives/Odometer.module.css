@@ -1,0 +1,26 @@
+.odo {
+  display: inline-flex;
+  align-items: flex-start;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.window {
+  display: inline-block;
+  height: 1em;
+  overflow: clip;
+  position: relative;
+}
+.reel {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.reel > span {
+  display: block;
+  height: 1em;
+  text-align: center;
+}
+.glyph {
+  display: inline-block;
+  height: 1em;
+}

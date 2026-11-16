@@ -1,0 +1,119 @@
+.helix {
+  --tint: transparent;
+  position: relative;
+  z-index: 2;
+  height: 100svh;
+  min-height: 600px;
+  overflow: hidden;
+  background: var(--bg-void);
+}
+.tint {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(70% 60% at 50% 50%, var(--tint), transparent 75%);
+  opacity: 0;
+  transition: opacity var(--t-base) var(--ease-out-quart), background var(--t-base) var(--ease-out-quart);
+  pointer-events: none;
+}
+.helix[data-hover='true'] .tint {
+  opacity: 0.45;
+  transition-duration: var(--t-fast);
+}
+.kinetic {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: space-between;
+  padding-block: 14vh 10vh;
+  pointer-events: none;
+  overflow: hidden;
+}
+.row {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 14vw, 16rem);
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  white-space: nowrap;
+  color: rgba(244, 245, 247, 0.06);
+  will-change: transform;
+}
+.rowOutline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(244, 245, 247, 0.12);
+}
+.head {
+  position: absolute;
+  top: calc(var(--header-h) + 8px);
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.all {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+}
+.host {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  touch-action: pan-y;
+}
+.canvas {
+  position: absolute;
+  inset: 0;
+}
+.info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(24px, 6vh, 56px);
+  margin-inline: auto;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  pointer-events: none;
+}
+.info > span {
+  white-space: nowrap;
+}
+.infoLink {
+  display: grid;
+  gap: 6px;
+  justify-items: end;
+  text-align: right;
+  pointer-events: auto;
+}
+
+/* Static fallback (reduced motion / no WebGL) */
+.helix[data-mode='static'] {
+  height: auto;
+  min-height: 0;
+  padding: calc(var(--header-h) + 64px) 0 var(--section-pad);
+}
+.helix[data-mode='static'] .head {
+  position: relative;
+  top: 0;
+  margin-bottom: 40px;
+}
+.grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: var(--gutter);
+}
+.gridItem {
+  display: grid;
+  gap: 10px;
+}
+.gridItem > div {
+  border-radius: var(--radius);
+}

@@ -1,0 +1,34 @@
+.card {
+  --mx: 50%;
+  --my: 50%;
+  --lift: 0;
+  position: relative;
+  background: var(--bg-raise);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transform-style: preserve-3d;
+  transition: border-color var(--t-base) var(--ease-out-quart), opacity var(--t-base) var(--ease-out-quart);
+  isolation: isolate;
+  overflow: hidden;
+}
+.spec {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: calc(var(--lift) * 1);
+  background: radial-gradient(
+    420px circle at var(--mx) var(--my),
+    rgba(244, 245, 247, 0.1),
+    rgba(244, 245, 247, 0.025) 40%,
+    transparent 70%
+  );
+  /* inner glow */
+  box-shadow: inset 0 0 0 1px rgba(244, 245, 247, calc(var(--lift) * 0.06));
+}
+@media (hover: hover) {
+  .card:hover {
+    border-color: var(--line-strong);
+    transition-duration: var(--t-fast);
+  }
+}

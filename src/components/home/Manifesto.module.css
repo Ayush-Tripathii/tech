@@ -1,0 +1,66 @@
+.manifesto {
+  position: relative;
+  z-index: 2;
+  background: var(--bg-void);
+  /* slides over the pinned hero */
+  box-shadow: 0 -40px 80px rgba(0, 0, 0, 0.6);
+}
+.seam {
+  border-block: 1px solid var(--line);
+  padding: 18px 0;
+  color: var(--ink-dim);
+  background: var(--bg-void);
+}
+.ticker {
+  font-size: 0.75rem;
+}
+.tick {
+  display: inline-flex;
+  align-items: center;
+  gap: 32px;
+  padding-right: 32px;
+}
+.star {
+  color: var(--ink);
+  font-size: 0.6rem;
+}
+.rule {
+  margin-top: -1px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  row-gap: clamp(40px, 6vw, 96px);
+  padding-top: clamp(48px, 8vw, 120px);
+}
+.verbLine {
+  grid-column: 1 / -1;
+  white-space: nowrap;
+}
+.verb {
+  color: var(--ink);
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-weight: 200;
+  letter-spacing: -0.02em;
+}
+.statement {
+  grid-column: 4 / span 9;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+}
+.aside {
+  grid-column: 4 / span 5;
+  max-width: 46ch;
+}
+@media (max-width: 1023px) {
+  .statement,
+  .aside {
+    grid-column: 1 / -1;
+  }
+  .verbLine {
+    white-space: normal;
+  }
+}

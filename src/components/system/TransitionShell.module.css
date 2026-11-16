@@ -1,0 +1,29 @@
+.shell {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  visibility: hidden;
+}
+.belts {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+.belt {
+  background: var(--bg-raise);
+  transform: scaleY(0);
+  /* overlap by 1px so no hairline seams on fractional widths */
+  margin-right: -1px;
+  box-shadow: inset -1px 0 0 var(--line);
+}
+.label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  overflow: clip;
+  white-space: nowrap;
+  color: var(--ink);
+}

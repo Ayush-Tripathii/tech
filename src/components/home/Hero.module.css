@@ -1,0 +1,263 @@
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  z-index: 0;
+}
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--bg-void);
+  transform-origin: 50% 40%;
+}
+.canvasHost {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  touch-action: pan-y;
+  outline-offset: -6px;
+}
+.canvas {
+  position: absolute;
+  inset: 0;
+}
+.poster {
+  position: absolute;
+  inset: 0;
+  display: none;
+}
+.canvasHost[data-webgl='off'] .poster {
+  display: block;
+}
+.canvasHost[data-webgl='off'] .canvas {
+  display: none;
+}
+
+/* Guide lines + weld sparks */
+.lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  pointer-events: none;
+  overflow: visible;
+}
+.line {
+  stroke: rgba(244, 245, 247, 0.22);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.hit {
+  stroke: transparent;
+  stroke-width: 24;
+  pointer-events: none;
+}
+.lines[data-armed='true'] .hit {
+  pointer-events: stroke;
+}
+.lines[data-armed='true'] .line {
+  stroke: rgba(244, 245, 247, 0.32);
+}
+.sparks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Layer B */
+.copy {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding-top: calc(var(--header-h) + 12px);
+  padding-bottom: clamp(28px, 6vh, 64px);
+  color: var(--ink);
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+.topRight {
+  display: inline-flex;
+  gap: 0.5ch;
+}
+.headlineWrap {
+  align-self: end;
+}
+.headline {
+  max-width: 12ch;
+  user-select: text;
+  pointer-events: auto;
+}
+.bottom {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  align-items: end;
+  margin-top: clamp(24px, 4vh, 48px);
+}
+.lede {
+  grid-column: 1 / span 5;
+  color: var(--ink);
+  max-width: 34ch;
+  pointer-events: auto;
+}
+.actions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(28px, 6vh, 64px);
+  margin-inline: auto;
+  z-index: 11;
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+.ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  pointer-events: auto;
+}
+
+/* Cues */
+.cueHold,
+.cueLines {
+  position: absolute;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+.cueHold {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, calc(min(30vmin, 260px)));
+  animation: cuePulse 3.2s var(--ease-in-out-quint) infinite;
+}
+.cueLines {
+  right: var(--side);
+  top: calc(22% + 14px);
+}
+.holdGlyph {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  position: relative;
+}
+.holdGlyph::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: holdDot 1.8s var(--ease-out-expo) infinite;
+}
+@keyframes holdDot {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.2;
+  }
+  60% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+@keyframes cuePulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.scrollCue {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 6;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+.scrollBar {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(var(--ink-dim), transparent);
+  transform-origin: top;
+  animation: scrollBar 2.2s var(--ease-in-out-quint) infinite;
+}
+@keyframes scrollBar {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  51% {
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+@media (max-width: 1023px) {
+  .lede {
+    grid-column: 1 / -1;
+  }
+  .actions {
+    position: absolute;
+    justify-content: flex-start;
+    bottom: 24px;
+  }
+  .bottom {
+    margin-bottom: 84px;
+  }
+  .scrollCue {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .cueHold {
+    left: var(--side);
+    top: calc(var(--header-h) + 52px);
+    transform: none;
+  }
+}
+@media (max-width: 480px) {
+  .bottom {
+    margin-bottom: 136px;
+  }
+  .topRight {
+    display: none;
+  }
+  .cueLines {
+    top: calc(22% + 10px);
+  }
+  .ctas :global(.btn) {
+    height: 48px;
+  }
+}

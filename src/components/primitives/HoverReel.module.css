@@ -1,0 +1,49 @@
+.reel {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--bg-raise);
+  min-height: 260px;
+  height: 100%;
+}
+.media {
+  position: absolute;
+  inset: 0;
+  transition: transform var(--t-base) var(--ease-out-quart);
+}
+.media video,
+.media canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.meta {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 18px;
+  background: linear-gradient(transparent, rgba(6, 7, 10, 0.8));
+}
+.corner {
+  overflow: clip;
+  display: inline-block;
+}
+.corner > span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform var(--t-base) var(--ease-out-expo);
+  color: var(--signal);
+}
+@media (hover: hover) {
+  .reel:hover .media {
+    transform: scale(1.04);
+    transition-duration: var(--t-fast);
+  }
+}
+.reel:hover .corner > span,
+.reel:focus-visible .corner > span {
+  transform: translateY(0);
+}

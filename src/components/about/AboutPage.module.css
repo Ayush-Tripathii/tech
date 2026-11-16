@@ -1,0 +1,165 @@
+.hero {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  row-gap: 48px;
+  align-items: end;
+  padding-top: calc(var(--header-h) + clamp(48px, 8vh, 96px));
+  min-height: 100svh;
+  padding-bottom: 48px;
+}
+.heroCopy {
+  grid-column: 1 / span 6;
+  display: grid;
+  gap: 28px;
+  align-self: center;
+}
+.heroCopy :global(.t-mega) {
+  font-size: clamp(3rem, 8vw, 10rem);
+}
+.portrait {
+  grid-column: 8 / span 5;
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-raise);
+  touch-action: none;
+  user-select: none;
+}
+.portraitCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.strips {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+.strip {
+  position: relative;
+  /* frosted glass: the portrait hints through before you peel */
+  background: rgba(13, 15, 20, 0.78);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border-right: 1px solid var(--line);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 14px;
+  color: var(--ink-dim);
+  will-change: transform;
+}
+.strip::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--spectrum);
+  opacity: 0.5;
+}
+.peelHint {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  opacity: 0;
+  transition: opacity var(--t-slow) var(--ease-out-quart);
+  pointer-events: none;
+}
+.portrait[data-armed='true'] .peelHint {
+  opacity: 1;
+}
+.nums {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gutter);
+  margin-top: 48px;
+}
+.nums li {
+  display: grid;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.teamArea {
+  position: relative;
+  height: clamp(560px, 70vh, 760px);
+  margin-top: 40px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.teamCard {
+  --hue: 200;
+  position: absolute;
+  width: clamp(200px, 22vw, 280px);
+  padding: 20px;
+  display: grid;
+  gap: 10px;
+  background: var(--bg-raise);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  touch-action: none;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+.avatar {
+  aspect-ratio: 1;
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  background:
+    radial-gradient(circle at 30% 30%, hsl(var(--hue) 80% 60% / 0.55), transparent 60%),
+    linear-gradient(135deg, hsl(var(--hue) 40% 18%), #06070a);
+}
+.cultureTitle {
+  margin: 40px 0;
+}
+.wall {
+  --tint: var(--bg-void);
+  position: relative;
+  height: clamp(620px, 95vh, 1000px);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--tint) 40%, var(--bg-void));
+  transition: background-color var(--t-slow) var(--ease-out-quart);
+  overflow: hidden;
+}
+.shot {
+  position: absolute;
+  display: grid;
+  gap: 8px;
+}
+.shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+  transition: transform var(--t-base) var(--ease-out-quart);
+}
+@media (hover: hover) {
+  .shot:hover img {
+    transform: scale(1.04);
+    transition-duration: var(--t-fast);
+  }
+}
+@media (max-width: 1023px) {
+  .heroCopy,
+  .portrait {
+    grid-column: 1 / -1;
+  }
+  .nums {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 32px;
+  }
+  .teamCard {
+    width: 46%;
+  }
+}

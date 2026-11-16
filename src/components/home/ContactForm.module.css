@@ -1,0 +1,220 @@
+.contact {
+  position: relative;
+  z-index: 2;
+  background: var(--bg-void);
+}
+.layout {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  row-gap: 48px;
+  margin-top: clamp(40px, 6vw, 80px);
+}
+.intro {
+  grid-column: 1 / span 5;
+  display: grid;
+  align-content: start;
+  gap: 24px;
+}
+.mail {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--ink);
+}
+.stageWrap {
+  grid-column: 7 / span 6;
+  perspective: 1400px;
+}
+.form {
+  display: grid;
+  gap: 8px;
+}
+.row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gutter);
+}
+.field {
+  position: relative;
+  padding-top: 18px;
+}
+.input {
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 0 10px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  color: var(--ink);
+  font-size: 1.0625rem;
+  outline: none;
+  transition: border-color var(--t-base) var(--ease-out-quart);
+  resize: vertical;
+}
+.input:focus {
+  border-bottom-color: var(--ink);
+  transition-duration: var(--t-fast);
+}
+.input:focus-visible {
+  outline: none;
+  box-shadow: 0 1px 0 0 var(--signal);
+  border-bottom-color: var(--signal);
+}
+.field[data-error='true'] .input {
+  border-bottom-color: #ff6b6b;
+}
+.label {
+  position: absolute;
+  left: 0;
+  top: 32px;
+  color: var(--ink-dim);
+  font-size: 1.0625rem;
+  pointer-events: none;
+  transform-origin: left top;
+  transition:
+    transform var(--t-base) var(--ease-out-expo),
+    color var(--t-base) var(--ease-out-quart);
+}
+input.input:focus + .label,
+textarea.input:focus + .label,
+input.input:not(:placeholder-shown) + .label,
+textarea.input:not(:placeholder-shown) + .label,
+.selectField[data-filled='true'] .label,
+.selectField[data-open='true'] .label {
+  transform: translateY(-24px) scale(0.72);
+  color: var(--ink);
+  transition-duration: var(--t-fast);
+}
+textarea.input + .label {
+  top: 32px;
+}
+/* Error message slides down: grid-template-rows 0fr → 1fr (height: auto, animated) */
+.err {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--t-base) var(--ease-out-expo);
+  color: #ff8a8a;
+}
+.err > div {
+  overflow: hidden;
+}
+.err span {
+  display: block;
+  padding-top: 8px;
+}
+.field[data-error='true'] .err {
+  grid-template-rows: 1fr;
+}
+
+/* Custom select */
+.selectBtn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+}
+.chev {
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg) translateY(-3px);
+  transition: transform var(--t-base) var(--ease-snap);
+}
+.selectField[data-open='true'] .chev {
+  transform: rotate(-135deg) translateY(-3px);
+}
+.options {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% - 4px);
+  z-index: 20;
+  background: var(--bg-raise);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 6px;
+  max-height: 280px;
+  overflow-y: auto;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+.option {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  padding: 10px 12px;
+  border-radius: 4px;
+  transition: background-color var(--t-fast) var(--ease-out-quart);
+}
+.option[data-focus='true'] {
+  background: rgba(244, 245, 247, 0.06);
+}
+.option[aria-selected='true'] {
+  color: var(--signal);
+}
+
+/* Submit morph */
+.submitRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+  min-height: 56px;
+}
+.submit {
+  overflow: hidden;
+  justify-content: center;
+  flex: none;
+}
+.submit:disabled {
+  cursor: progress;
+}
+.fill {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: -1;
+}
+.btnLabel {
+  display: inline-flex;
+  gap: 14px;
+  align-items: center;
+}
+.check {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 24px;
+  height: 24px;
+  color: var(--bg-void);
+  pointer-events: none;
+}
+.check path {
+  stroke-dasharray: 0 999;
+}
+.success {
+  display: grid;
+  gap: 20px;
+  padding: clamp(24px, 4vw, 48px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  outline: none;
+}
+
+@media (max-width: 1023px) {
+  .intro,
+  .stageWrap {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 600px) {
+  .row2 {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
